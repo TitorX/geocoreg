@@ -1,0 +1,42 @@
+[build-system]
+# setuptools >= 77 is required for the SPDX `license` / `license-files` fields
+# (PEP 639) used below.
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geocoreg"
+version = "1.0.0"
+description = "Dense, per-pixel co-registration of georeferenced satellite imagery"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Shoukun Sun", email = "titor.sun@gmail.com" },
+    { name = "Zhe Wang" },
+    { name = "Sanaz Salati" },
+    { name = "Jiyin Zhang" },
+    { name = "Hui Wang" },
+    { name = "Xiaogang Ma" },
+]
+# GDAL's Python bindings (`osgeo`) are a hard runtime requirement but are
+# deliberately NOT listed here: installing GDAL through pip needs a matching
+# system GDAL and pre-configured headers, and usually fails. Install GDAL
+# first from conda-forge or with pixi, then install this package.
+dependencies = [
+    "numpy",
+    "opencv-python-headless",
+    "scipy",
+    "scikit-image",
+]
+
+[project.optional-dependencies]
+viz = ["matplotlib"]
+dev = ["pytest"]
+
+[project.scripts]
+geocoreg = "geocoreg.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
